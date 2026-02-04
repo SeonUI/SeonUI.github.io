@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "React",
+    "description": "React 관련 포스트"
+  },
+  {
+    "id": 2,
+    "name": "Next.js",
+    "description": "Next.js 관련 포스트"
+  },
+  {
+    "id": 3,
+    "name": "TypeScript",
+    "description": "TypeScript 관련 포스트"
+  },
+  {
+    "id": 4,
+    "name": "CSS",
+    "description": "CSS 관련 포스트"
+  },
+  {
+    "id": 5,
+    "name": "JavaScript",
+    "description": "JavaScript 관련 포스트"
+  },
+  {
+    "id": 6,
+    "name": "Web",
+    "description": "웹 개발 관련 포스트"
+  }
+]
