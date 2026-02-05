@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+//export const dynamic = "force-static"
 
 export interface PostMetadata {
   title: string;
@@ -98,4 +99,28 @@ export async function getPost(slug: string): Promise<Post | null> {
     content: body,
     ...metadata,
   };
+}
+
+
+
+// 모든 Category 가져오기
+export interface Category {
+  id: string;
+  name: string;
+  description: string;
+}
+export async function getCategories(): Promise<Category[]> {
+  // 1. 파일 경로 설정 (public/categories.json)
+  const filePath = path.join(process.cwd(), "public", "categories.json");
+  
+  try {
+    // 2. 파일 읽기
+    const fileContents = fs.readFileSync(filePath, "utf8");
+    
+    // 3. JSON 파싱해서 반환
+    return JSON.parse(fileContents);
+  } catch (error) {
+    console.error("카테고리 파일을 읽는 중 에러 발생:", error);
+    return [];
+  }
 }

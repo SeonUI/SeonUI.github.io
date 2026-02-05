@@ -1,6 +1,6 @@
 import { getPost } from "@/app/blog/lib/posts";
 import { NextResponse } from "next/server";
-
+export const dynamic = "force-static"
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ slug: string }> }

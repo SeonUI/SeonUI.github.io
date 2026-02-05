@@ -1,6 +1,5 @@
-"use client";
 
-import { useEffect, useState } from "react";
+import { getCategories, getAllPosts } from "@/app/blog/lib/posts";
 
 interface Post {
   slug: string;
@@ -10,49 +9,29 @@ interface Post {
   excerpt: string;
 }
 
-export default function CategoryPage({
-  params,
-}: {
+export async function generateStaticParams() {
+  const categories = await getCategories();
+  return categories.map((category) => ({
+    name: category.name, 
+  }));
+}
+
+interface PageProps {
   params: Promise<{ name: string }>;
-}) {
-  const [category, setCategory] = useState<string>("");
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [loading, setLoading] = useState(true);
+}
 
-  useEffect(() => {
-    const unwrapParams = async () => {
-      const resolvedParams = await params;
-      setCategory(decodeURIComponent(resolvedParams.name));
-    };
+export default async function CategoryPage({ params }: PageProps) {
+  
+  const { name } = await params;
+  const category = name 
+  const allPosts = await getAllPosts();
 
-    unwrapParams();
-  }, [params]);
-
-  useEffect(() => {
-    if (!category) return;
-
-    const loadPosts = async () => {
-      try {
-        const response = await fetch(`/api/posts/category/${encodeURIComponent(category)}`);
-        if (!response.ok) {
-          throw new Error("포스트를 찾을 수 없습니다.");
-        }
-        const data = await response.json();
-        setPosts(data);
-      } catch (error) {
-        console.error("포스트 로드 실패:", error);
-        setPosts([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadPosts();
-  }, [category]);
-
-  if (loading) {
-    return <div className="text-center text-gray-500 py-12">로딩 중...</div>;
-  }
+  const filteredPosts = allPosts.filter(
+    (post) => post.category.toLowerCase() === category.toLowerCase()
+  );
+  const postsData = filteredPosts.map(({ content, ...rest }) => rest);
+  const posts: Post[] = postsData
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   return (
     <main className="max-w-3xl mx-auto px-8 py-12">

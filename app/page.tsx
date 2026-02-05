@@ -5,10 +5,10 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-white dark:bg-black">
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm flex flex-col">
         <h1 className="text-6xl font-bold mb-8 text-black dark:text-white">
-          Welcome to My Blog
+          Sunwoo's Blog
         </h1>
         <p className="text-xl mb-12 text-gray-600 dark:text-gray-400 text-center">
-          Next.js로 구축된 개인 블로그입니다. 다양한 기술 포스트와 카테고리를 확인해보세요.
+          잡다한 것들을 확인해보세요.
         </p>
         <div className="flex gap-4">
           <Link

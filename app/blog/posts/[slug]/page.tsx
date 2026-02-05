@@ -1,8 +1,6 @@
-"use client";
 
-import { useEffect, useState } from "react";
+import { getAllPosts, getPost } from "@/app/blog/lib/posts";
 import { marked } from "marked";
-import { use } from "react";
  
 interface Post {
   slug: string;
@@ -12,41 +10,23 @@ interface Post {
   excerpt: string;
   content: string;
 }
- 
-export default function PostPage({ params }: { params: { slug: string } }) {
-  const [post, setPost] = useState<Post | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [htmlContent, setHtmlContent] = useState("");
-  const { slug } = use(params);
 
-  useEffect(() => {
-    if (!slug) return;
-    const loadPost = async () => {
-      try {
-        const response = await fetch(`/api/posts/${slug}`);
-        if (!response.ok) {
-          throw new Error("포스트를 찾을 수 없습니다.");
-        }
-        const data = await response.json();
-        setPost(data);
- 
-        // 마크다운을 HTML로 변환
-        const html = await marked(data.content);
-        setHtmlContent(html);
- 
-      } catch (error) {
-        console.error("포스트 로드 실패:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    
-    loadPost();
-  }, [slug]);
+interface PageProps {
+  params: Promise<{ slug: string }>;
+}
 
-  if (loading) {
-    return <div className="text-center text-gray-500 py-12">로딩 중...</div>;
-  }
+// 1. 빌드 시 어떤 페이지들을 만들지 결정
+export async function generateStaticParams() {
+  const posts = await getAllPosts(); // lib에서 직접 가져옴
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}
+ 
+export default async function PostPage({ params }: PageProps) {
+
+  const { slug } = await params;
+  const post = await getPost(slug);
 
   if (!post) {
    return (
@@ -56,6 +36,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
     );
   }
 
+  const htmlContent = await marked(post.content);
 
   return (
     <article className="max-w-3xl mx-auto px-8 py-12">
