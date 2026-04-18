@@ -1,7 +1,7 @@
 # Homepage
 
-This is SeonUI's homepage 
+This is SeonUI's homepage : https://seonui.github.io/
 
-Planned to add many features 
+Planning to add many features 
 
 Blog Prototype updated

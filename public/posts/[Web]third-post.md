@@ -1,8 +1,8 @@
 ---
 title: "TypeScript 완벽 가이드"
 date: "2024-02-02"
-category: "TypeScript"
-excerpt: "TypeScript의 기본부터 심화까지 알아봅시다."
+category: "Web 개발"
+excerpt: "TypeScript의 기본 개념"
 ---
 
 # TypeScript 완벽 가이드
@@ -53,4 +53,3 @@ function add(a: number, b: number): number {
 const result = add(5, 3); // result의 타입은 number
 ```
 
-TypeScript는 JavaScript 개발을 더욱 안전하고 체계적으로 만들어줍니다!

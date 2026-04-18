@@ -28,9 +28,9 @@ export default function About() {
               관심 분야
             </h2>
             <ul className="list-disc list-inside text-gray-700 dark:text-gray-300 space-y-2 mb-8">
-              <li>인공신경망</li>
+              <li>LLM 활용</li>
               <li>문제해결</li>
-              <li>프론트엔드 개발</li>
+              <li>웹 개발</li>
             </ul>
 
             <h2 className="text-2xl font-bold text-black dark:text-white mt-8 mb-4">

@@ -1,8 +1,8 @@
 ---
 title: "React 시작하기"
 date: "2024-02-04"
-category: "React"
-excerpt: "React의 기본 개념과 시작 방법을 알아봅시다."
+category: "Web 개발"
+excerpt: "React의 기본 개념"
 ---
 
 # React 시작하기
@@ -35,4 +35,3 @@ function Hello() {
 export default Hello;
 ```
 
-React를 배우는 것은 재미있고 보람찬 경험이 될 것입니다!
