@@ -22,8 +22,8 @@ export default function About() {
             <p className="text-zinc-700 dark:text-zinc-300 mb-8 text-lg leading-relaxed">
               현재 3학년 재학중이며, 여러 분야를 도전해보고 있습니다. <br/>
               단순히 코드를 짜는 것을 넘어 문제를 정의하고, 고민하고, 해결하는 데 관심이 많습니다.
-              학습한 것, 고민한 것들을 기록하려고 합니다. <br/> <br/>
-              UI에 대해서는 잘 모릅니다
+              학습한 것, 고민한 것들을 기록하려고 합니다. <br/>
+              {/* SeonUI는 AI를 떠올리며 지은 이름입니다. UI에 대해서는 잘 모르지만 UI/UX도 흥미로운 분야라 생각합니다. <br/> */}
             </p>
 
             <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mt-12 mb-6">
