@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,11 +31,11 @@ export default function RootLayout({
         <header className="bg-black text-white sticky top-0 z-50">
           <nav className="max-w-3xl mx-auto px-8 py-4 flex justify-between items-center">
             <h1 className="text-2xl font-bold">
-              <a href="/" className="hover:text-gray-300">Home</a>
+              <Link href="/" className="hover:text-gray-300">Home</Link>
             </h1>
             <ul className="flex gap-6">
-              <li><a href="/blog" className="hover:text-gray-300">Blog</a></li>
-              <li><a href="/about" className="hover:text-gray-300">About</a></li>
+              <li><Link href="/blog" className="hover:text-gray-300">Blog</Link></li>
+              <li><Link href="/about" className="hover:text-gray-300">About</Link></li>
             </ul>
           </nav>
         </header>

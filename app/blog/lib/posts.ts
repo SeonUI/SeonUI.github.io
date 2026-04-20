@@ -19,17 +19,18 @@ function parseFrontMatter(content: string): {
   metadata: PostMetadata;
   body: string;
 } {
-  // 더 유연한 정규식 (줄바꿈 변동 대응)
-  const frontMatterRegex = /^-{3,}\s*\n([\s\S]*?)\n-{3,}\s*\n([\s\S]*)$/;
-  const match = content.match(frontMatterRegex);
+  // BOM 제거 및 유연한 정규식 (줄바꿈 변동 대응)
+  const normalizedContent = content.replace(/^\ufeff/, "");
+  const frontMatterRegex = /^-{3,}\s*[\r\n]+([\s\S]*?)[\r\n]+-{3,}\s*[\r\n]*([\s\S]*)$/;
+  const match = normalizedContent.match(frontMatterRegex);
 
   if (!match) {
-    console.error("Front Matter 파싱 실패. 파일 형식:", content.substring(0, 100));
+    console.error("Front Matter 파싱 실패. 파일 형식:", normalizedContent.substring(0, 100));
     throw new Error("Invalid front matter format");
   }
 
   const metadataStr = match[1];
-  const body = match[2];
+  const body = match[2] || "";
 
   const metadata: PostMetadata = {
     title: "",
@@ -39,15 +40,16 @@ function parseFrontMatter(content: string): {
   };
 
   // YAML 파싱
-  const lines = metadataStr.split("\n");
+  const lines = metadataStr.split(/[\r\n]+/);
   lines.forEach((line) => {
-    if (!line.trim()) return; // 빈 줄 무시
+    const trimmedLine = line.trim();
+    if (!trimmedLine) return; 
     
-    const colonIndex = line.indexOf(":");
+    const colonIndex = trimmedLine.indexOf(":");
     if (colonIndex === -1) return;
     
-    const key = line.substring(0, colonIndex).trim();
-    const value = line.substring(colonIndex + 1).trim().replace(/^["']|["']$/g, "");
+    const key = trimmedLine.substring(0, colonIndex).trim();
+    const value = trimmedLine.substring(colonIndex + 1).trim().replace(/^["']|["']$/g, "");
 
     if (key === "title") metadata.title = value;
     if (key === "date") metadata.date = value;
@@ -60,53 +62,87 @@ function parseFrontMatter(content: string): {
 
 // 모든 포스트 가져오기
 export async function getAllPosts(): Promise<Post[]> {
-  const postsDir = path.join(process.cwd(), "/public/posts");
+  const postsDir = path.join(process.cwd(), "public", "posts");
+  
+  if (!fs.existsSync(postsDir)) {
+    console.error("Posts directory not found:", postsDir);
+    return [];
+  }
+
   const files = fs.readdirSync(postsDir).filter((file) => file.endsWith(".md"));
 
   const posts = files.map((file) => {
-    const slug = file.replace(".md", "");
-    const fullPath = path.join(postsDir, file);
-    const content = fs.readFileSync(fullPath, "utf-8");
-    const { metadata, body } = parseFrontMatter(content);
+    try {
+      const slug = file.replace(".md", "");
+      const fullPath = path.join(postsDir, file);
+      const content = fs.readFileSync(fullPath, "utf-8");
+      const { metadata, body } = parseFrontMatter(content);
 
-    return {
-      slug,
-      content: body,
-      ...metadata,
-    };
-  });
+      return {
+        slug,
+        content: body,
+        ...metadata,
+      };
+    } catch (error) {
+      console.error(`Error parsing post ${file}:`, error);
+      return null;
+    }
+  }).filter((post): post is Post => post !== null);
 
   // 날짜 기준으로 최신순 정렬
   return posts.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    (a, b) => {
+      const dateA = new Date(a.date).getTime() || 0;
+      const dateB = new Date(b.date).getTime() || 0;
+      return dateB - dateA;
+    }
   );
 }
 
 // 특정 포스트 가져오기
 export async function getPost(slug: string): Promise<Post | null> {
-  const postsDir = path.join(process.cwd(), "/public/posts");
+  const postsDir = path.join(process.cwd(), "public", "posts");
   const fullPath = path.join(postsDir, `${slug}.md`);
 
   if (!fs.existsSync(fullPath)) {
-    return null;
+    // 혹시라도 인코딩된 상태로 들어왔을 경우를 대비한 디코딩 시도
+    const decodedSlug = decodeURIComponent(slug);
+    const altPath = path.join(postsDir, `${decodedSlug}.md`);
+    if (!fs.existsSync(altPath)) {
+      console.warn(`Post not found: ${fullPath} or ${altPath}`);
+      return null;
+    }
+    // altPath가 존재하면 content 읽기
+    try {
+      const content = fs.readFileSync(altPath, "utf-8");
+      const { metadata, body } = parseFrontMatter(content);
+      return { slug: decodedSlug, content: body, ...metadata };
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (_e) { return null; }
   }
 
-  const content = fs.readFileSync(fullPath, "utf-8");
-  const { metadata, body } = parseFrontMatter(content);
+  try {
+    const content = fs.readFileSync(fullPath, "utf-8");
+    const { metadata, body } = parseFrontMatter(content);
 
-  return {
-    slug,
-    content: body,
-    ...metadata,
-  };
+    return {
+      slug: slug,
+      content: body,
+      ...metadata,
+    };
+  } catch (error) {
+    console.error(`Error reading post ${slug}:`, error);
+    return null;
+  }
 }
 
 
 
 // 모든 Category 가져오기
 export interface Category {
-  id: string;
+  id: number;
   name: string;
+  slug: string;
   description: string;
 }
 export async function getCategories(): Promise<Category[]> {

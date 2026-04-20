@@ -1,17 +1,17 @@
 
 import { getAllPosts } from "@/app/blog/lib/posts";
+import Link from "next/link";
 
-interface Post {
-  slug: string;
-  title: string;
-  date: string;
-  category: string;
-  excerpt: string;
-  content: string;
+interface BlogComponentProps {
+  limit?: number;
 }
 
-export default async function BlogComponent() {
-  const posts = await getAllPosts();
+export default async function BlogComponent({ limit }: BlogComponentProps) {
+  let posts = await getAllPosts();
+
+  if (limit) {
+    posts = posts.slice(0, limit);
+  }
 
   if (posts.length === 0) {
     return <div className="text-center text-gray-500">포스트가 없습니다.</div>;
@@ -20,7 +20,7 @@ export default async function BlogComponent() {
   return (
     <div className="mt-8">
       {posts.map((post) => (
-        <a
+        <Link
           key={post.slug}
           href={`/blog/posts/${post.slug}`}
           className="block bg-gray-100 dark:bg-gray-800 rounded-lg p-6 mb-4 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer"
@@ -37,7 +37,7 @@ export default async function BlogComponent() {
           <p className="text-gray-600 dark:text-gray-400 mb-4">
             {post.excerpt}
           </p>
-        </a>
+        </Link>
       ))}
     </div>
   );

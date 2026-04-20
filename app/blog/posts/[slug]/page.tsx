@@ -1,31 +1,28 @@
 
 import { getAllPosts, getPost } from "@/app/blog/lib/posts";
 import { marked } from "marked";
+import Link from "next/link";
  
-interface Post {
-  slug: string;
-  title: string;
-  date: string;
-  category: string;
-  excerpt: string;
-  content: string;
-}
-
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+export const dynamicParams = false;
+
 // 1. 빌드 시 어떤 페이지들을 만들지 결정
 export async function generateStaticParams() {
   const posts = await getAllPosts(); // lib에서 직접 가져옴
-  return posts.map((post) => ({
+  const params = posts.map((post) => ({
     slug: post.slug,
   }));
+  console.log("Generated post params (Raw):", params);
+  return params;
 }
  
 export default async function PostPage({ params }: PageProps) {
 
-  const { slug } = await params;
+  const { slug: categoryParam } = await params;
+  const slug = decodeURIComponent(categoryParam);
   const post = await getPost(slug);
 
   if (!post) {
@@ -43,7 +40,7 @@ export default async function PostPage({ params }: PageProps) {
       {/* 포스트 헤더 */}
       <header className="mb-8 border-b border-gray-200 dark:border-gray-800 pb-8">
         <div className="flex items-center justify-between mb-4">
-          <span className="text-sm bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded">
+          <span className="not-prose text-sm bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded">
             {post.category}
           </span>
         </div>
@@ -71,15 +68,16 @@ export default async function PostPage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: htmlContent }}
       />
 
-      {/* 돌아가기 버튼 */}
-      <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800">
-        <a
-          href="/blog"
-          className="text-blue-500 hover:underline"
-        >
-          ← 돌아가기
-        </a>
-      </div>
-    </article>
-  );
-}
+            {/* 돌아가기 버튼 */}
+            <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800">
+              <Link
+                href="/blog"
+                className="text-blue-500 hover:underline"
+              >
+                ← 돌아가기
+              </Link>
+            </div>
+          </article>
+        );
+      }
+      

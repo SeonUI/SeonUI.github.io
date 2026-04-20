@@ -2,16 +2,19 @@
   {
     "id": 1,
     "name": "Web 개발",
+    "slug": "web-development",
     "description": "React, Next.js, React 등"
   },
   {
     "id": 2,
     "name": "Problem Solving",
+    "slug": "problem-solving",
     "description": "PS, Algorithm 관련 포스트"
   },
   {
     "id": 3,
     "name": "AI 활용",
+    "slug": "ai-utilization",
     "description": "Agent, langchain 관련 포스트"
   }
 ]

@@ -5,7 +5,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-white dark:bg-black">
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm flex flex-col">
         <h1 className="text-6xl font-bold mb-8 text-black dark:text-white">
-          Sunwoo's Blog
+          Sunwoo&apos;s Blog
         </h1>
         <p className="text-xl mb-12 text-gray-600 dark:text-gray-400 text-center">
           잡다한 것들을 확인해보세요.

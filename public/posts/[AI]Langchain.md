@@ -1,6 +1,6 @@
 ---
 title: "Langchain 기본"
-date: "2025-07-20"
+date: "2024-05-10"
 category: "AI 활용"
 excerpt: "Langchain의 기본 체계"
 ---
