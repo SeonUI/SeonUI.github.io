@@ -1,20 +1,56 @@
 [
   {
     "id": 1,
-    "name": "Web 개발",
-    "slug": "web-development",
-    "description": "React, Next.js, React 등"
+    "name": "Development",
+    "slug": "development",
+    "description": "기술 및 개발 관련 기록"
   },
   {
     "id": 2,
-    "name": "Problem Solving",
-    "slug": "problem-solving",
-    "description": "PS, Algorithm 관련 포스트"
+    "name": "Web",
+    "slug": "web",
+    "parentId": 1,
+    "description": "Frontend, Backend, Frameworks"
   },
   {
     "id": 3,
-    "name": "AI 활용",
-    "slug": "ai-utilization",
-    "description": "Agent, langchain 관련 포스트"
+    "name": "Algorithm",
+    "slug": "algorithm",
+    "parentId": 1,
+    "description": "PS, 자료구조, 알고리즘"
+  },
+  {
+    "id": 4,
+    "name": "AI & Data",
+    "slug": "ai-data",
+    "parentId": 1,
+    "description": "LLM, ML, Data Science"
+  },
+  {
+    "id": 5,
+    "name": "Life",
+    "slug": "life",
+    "description": "일상과 경험"
+  },
+  {
+    "id": 6,
+    "name": "Daily",
+    "slug": "daily",
+    "parentId": 5,
+    "description": "오늘의 기록"
+  },
+  {
+    "id": 7,
+    "name": "Experience",
+    "slug": "experience",
+    "parentId": 5,
+    "description": "특별한 경험 및 회고"
+  },
+  {
+    "id": 8,
+    "name": "Thoughts",
+    "slug": "thoughts",
+    "parentId": 5,
+    "description": "생각 정리"
   }
 ]

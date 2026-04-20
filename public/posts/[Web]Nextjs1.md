@@ -1,11 +1,11 @@
 ---
-title: "Next.js로 풀스택 앱 만들기"
+title: "Next.js 기본"
 date: "2024-02-04"
-category: "Web 개발"
+category: "Web"
 excerpt: "Next.js 기본 개념"
 ---
 
-# Next.js로 풀스택 앱 만들기
+# Next.js란?
 
 Next.js는 React 기반의 풀스택 프레임워크로, 서버 사이드 렌더링과 정적 생성을 지원합니다.
 

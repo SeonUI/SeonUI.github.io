@@ -1,15 +1,15 @@
 ---
-title: "TypeScript 완벽 가이드"
+title: "TypeScript 시작"
 date: "2024-02-02"
-category: "Web 개발"
+category: "Web"
 excerpt: "TypeScript의 기본 개념"
 ---
 
-# TypeScript 완벽 가이드
+# TypeScript란?
 
 TypeScript는 JavaScript에 정적 타입을 추가하여 개발 경험을 개선합니다.
 
-## TypeScript가 필요한 이유
+## 장점
 
 - **타입 안정성**: 컴파일 시점에 오류 발견
 - **자동 완성**: IDE 지원 향상

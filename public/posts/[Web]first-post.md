@@ -1,17 +1,15 @@
 ---
-title: "React 시작하기"
+title: "React 기본"
 date: "2024-02-04"
-category: "Web 개발"
+category: "Web"
 excerpt: "React의 기본 개념"
 ---
 
-# React 시작하기
+# React란?
 
 React는 Facebook에서 만든 JavaScript 라이브러리로, 사용자 인터페이스를 구축하기 위한 강력한 도구입니다.
 
-## React란?
-
-React는 다음과 같은 특징을 가지고 있습니다:
+## 특징
 
 - **선언형**: UI를 어떻게 보이는지 선언적으로 작성
 - **컴포넌트 기반**: 재사용 가능한 컴포넌트로 구성

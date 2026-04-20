@@ -1,7 +1,7 @@
 ---
 title: "Segment Tree"
 date: "2025-07-20"
-category: "Problem Solving"
+category: "Algorithm"
 excerpt: "Segment Tree 개념 정리"
 ---
 데이터의 **구간**에 대한 문제가 주어졌을 때 

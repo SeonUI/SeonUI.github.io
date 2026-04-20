@@ -1,7 +1,7 @@
 ---
 title: "Dynamic Programming"
 date: "2025-07-20"
-category: "Problem Solving"
+category: "Algorithm"
 excerpt: "DP 문제 풀기"
 ---
 
